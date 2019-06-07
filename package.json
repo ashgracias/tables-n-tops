@@ -1,0 +1,19 @@
+{
+  "name": "tables-n-tops",
+  "version": "1.0.0",
+  "description": "virtual table top display for maps etc for screen sharing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashgracias/tables-n-tops.git"
+  },
+  "author": "ashgracias",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ashgracias/tables-n-tops/issues"
+  },
+  "homepage": "https://github.com/ashgracias/tables-n-tops#readme"
+}
