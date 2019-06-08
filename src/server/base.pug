@@ -1,0 +1,35 @@
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        title tables-n-tops
+        style(type="text/css").
+            @font-face {
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: 300;
+                src: url(/public/fonts/Roboto-Light-webfont.woff2) format('font-woff2');
+
+            }
+
+        style(type="text/css").
+            html {
+                font-family: 'American Typewriter', sans-serif;
+                font-weight: 400;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            #mainDiv {
+                width: 100%;
+            }
+
+    body
+        div#mainDiv
+            script.
+                window.__PRELOADED_STATE__ = !{state}
+            script(src="/js/main.js")
