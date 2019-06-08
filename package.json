@@ -4,7 +4,9 @@
   "description": "virtual table top display for maps etc for screen sharing",
   "main": "/src/server/index.js",
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
     "body-parser": "^1.19.0",
+    "css-loader": "^2.1.1",
     "express": "^4.17.1",
     "express-session": "^1.16.1",
     "file-loader": "^4.0.0",
@@ -17,7 +19,8 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "serve-favicon": "^2.5.0",
-    "simple-env-config": "^1.0.1"
+    "simple-env-config": "^1.0.1",
+    "style-loader": "^0.23.1"
   },
   "scripts": {
     "build": "webpack",
