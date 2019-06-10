@@ -1,0 +1,6 @@
+{
+  "url": "http://localhost",
+  "api_version": "/v1",
+  "mongodb": "mongodb://localhost:27017/ashgracias",
+  "port": 8080
+}

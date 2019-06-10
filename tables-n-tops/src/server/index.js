@@ -1,0 +1,116 @@
+"use strict";
+
+
+let path = require("path"),
+    fs = require("fs"),
+    http = require("http"),
+    https = require("https"),
+    express = require("express"),
+    bodyParser = require("body-parser"),
+    logger = require("morgan"),
+    session = require("express-session"),
+    mongoose = require("mongoose"),
+    envConfig = require("simple-env-config");
+
+const env = process.env.NODE_ENV ? process.env.NODE_ENV : "dev";
+
+/**********************************************************************************************************/
+
+const setupServer = async () => {
+    // Get the app config
+    const conf = await envConfig("./config/config.json", env);
+    const port = process.env.PORT ? process.env.PORT : conf.port;
+
+    // Setup our Express pipeline
+    let app = express();
+    if (env !== "test") app.use(logger("dev"));
+    app.engine("pug", require("pug").__express);
+    app.set("views", __dirname);
+    app.use(express.static(path.join(__dirname, "../../public")));
+    app.use(logger('dev'));
+    // Setup pipeline session support
+    app.store = session({
+        name: "session",
+        secret: "tarrasque",
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            path: "/"
+        }
+    });
+    app.use(app.store);
+    // Finish with the body parser
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+
+    // Connect to MongoDB
+    try {
+        // console.log("Connecting to MongoDB");
+        mongoose.set("useFindAnyModify", false); // New deprecation warnings
+        mongoose.set("useCreateIndex", true); // New deprecation warnings
+        // await mongoose.connect(conf.mongodb, {
+        //     useNewUrlParser: true, // New deprecation warnings
+        // });
+        console.log(`MongoDB connected: ${conf.mongodb}`);
+    } catch (err) {
+        console.log(err);
+        process.exit(-1);
+    }
+
+    // Import our Data Models
+    app.models = {
+        User: require("./models/user")
+    };
+
+    // Import our routes
+    require("./api")(app);
+
+    // Give them the SPA base page
+    app.get("*", (req, res) => {
+        const user = req.session.user;
+        console.log(`Loading app for: ${user ? user.username : "nobody!"}`);
+        let preloadedState = user
+            ? {
+                username: user.username,
+            }
+            : {};
+        preloadedState = JSON.stringify(preloadedState).replace(/</g, "\\u003c");
+        res.render("base.pug", {
+            state: preloadedState
+        });
+    });
+
+    // Run the server itself
+    let server;
+    if (env === "production") {
+        const options = {
+            key: fs.readFileSync(conf.security.keyPath),
+            cert: fs.readFileSync(conf.security.certPath),
+            ca: fs.readFileSync(conf.security.caPath)
+        };
+        // Listen for HTTPS requests
+        server = https.createServer(options, app).listen(port, () => {
+            console.log(`Secure tables-n-tops listening on: ${server.address().port}`);
+        });
+        // Redirect HTTP to HTTPS
+        http
+            .createServer((req, res) => {
+                const location = `https://${req.headers.host}${req.url}`;
+                console.log(`Redirect to: ${location}`);
+                res.writeHead(302, { Location: location });
+                res.end();
+            })
+            .listen(80, () => {
+                console.log(`tables-n-tops listening on 80 for HTTPS redirect`);
+            });
+    } else {
+        server = app.listen(port, () => {
+            console.log(`tables-n-tops ${env} listening on: ${server.address().port}`);
+        });
+    }
+};
+
+/**********************************************************************************************************/
+
+// Run the server
+setupServer();

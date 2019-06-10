@@ -1,51 +1,22 @@
 {
   "name": "tables-n-tops",
   "version": "1.0.0",
-  "description": "virtual table top display for maps etc for screen sharing",
-  "main": "/src/server/index.js",
-  "dependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "body-parser": "^1.19.0",
-    "css-loader": "^2.1.1",
-    "express": "^4.17.1",
-    "express-session": "^1.16.1",
-    "file-loader": "^4.0.0",
-    "mongoose": "^5.5.13",
-    "morgan": "^1.9.1",
-    "pug": "^2.0.3",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-number-format": "^4.0.8",
-    "react-router": "^5.0.1",
-    "react-router-dom": "^5.0.1",
-    "serve-favicon": "^2.5.0",
-    "simple-env-config": "^1.0.1",
-    "style-loader": "^0.23.1"
-  },
+  "description": "potential screen sharing",
+  "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "start": "node ./src/server/index.js",
-    "start-test": "NODE_ENV=test node ./src/server/index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ashgracias/tables-n-tops.git"
   },
+  "keywords": [
+    "tabletop"
+  ],
   "author": "ashgracias",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ashgracias/tables-n-tops/issues"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.2",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.6",
-    "superagent": "^5.0.6",
-    "url-loader": "^2.0.0",
-    "webpac": "^1.0.1",
-    "webpack": "^4.33.0",
-    "webpack-cli": "^3.3.3"
   },
   "homepage": "https://github.com/ashgracias/tables-n-tops#readme"
 }
